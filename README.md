@@ -1,5 +1,5 @@
-# Pfsense-Graylog-Grafana
-Grafical overview about the Pfsense firewall
+# Install GrayLog and Grafana to monitor Pfsense
+Grafical monitoring the Pfsense firewall (PfsenseGG)
 
 ### Prerequisites
 - Centos 7 minimal 
