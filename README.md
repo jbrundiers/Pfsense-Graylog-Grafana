@@ -11,6 +11,7 @@ Grafical overview about the Pfsense firewall
 ### 1. Install Graylog
 Install Graylog according to the manufacturers specifications as described in the following link:
 http://docs.graylog.org/en/3.1/pages/installation/os/centos.html
+
 Edit “/etc/graylog/server/server.conf”  and change the root_timzone according to your needs. In my case I had to change 
 form UTC to Europe/Berlin:
 ```
@@ -79,11 +80,15 @@ cp GeoLite2-City_*/GeoLite2-City.mmdb /etc/graylog/server
 ### 5. Summary Installation
 
 Now your server should expose you the following services externally:
+
 Graylog	      on port 9000    http://hostname:9000
+
 Grafana	      on port 3000    http://hostname:3000
 
 and the following services localy:
+
 Elasticsearch on port 9200	  http://localhost:9200
+
 Cerebro	      on port 9001    http://localhost:9001
 
 
