@@ -10,8 +10,12 @@ Grafical overview about the Pfsense firewall
 
 ### 1. Install Graylog
 Install Graylog according to the manufacturers specifications as described in the following link:
-
 http://docs.graylog.org/en/3.1/pages/installation/os/centos.html
+Edit “/etc/graylog/server/server.conf”  and change the root_timzone according to your needs. In my case I had to change 
+form UTC to Europe/Berlin:
+```
+  root_timezone = Europe/Berlin 
+```
 
 ### 2. Download and install Cerebro
 ```
@@ -103,21 +107,7 @@ sudo nano /etc/cron.weekly/geoipupdate
 
 
 
-### 11. Configure Kibana
-```
-sudo nano /etc/kibana/kibana.yml
-```
 
-### 12. Modify host file (/etc/kibana/kibana.yml)
-- server.port: 5601
-- server.host: "0.0.0.0"
-
-# Configure Logstash|v7+
-
-### 13. Change Directory
-```
-cd /etc/logstash/conf.d
-```
 
 ### 14. Download the following configuration files
 ```
@@ -129,30 +119,7 @@ sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/11-firew
 ```
 sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/20-geoip.conf
 ```
-```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/50-outputs.conf
-```
-### 14a. (Optional) Download the following configuration files
-```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/12-suricata.conf
-```
-```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/13-snort.conf
-```
-```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/15-others.conf
-```
 
-
-### 15. Make Patterns Folder
-```
-sudo mkdir /etc/logstash/conf.d/patterns
-```
-
-### 16. Navigate to Patterns Folder
-```
-cd /etc/logstash/conf.d/patterns/
-```
 
 ### 17. Download the following configuration file
 ```
