@@ -1,0 +1,288 @@
+{
+  "order": -1,
+  "index_patterns": [
+    "pfsensegg_*"
+  ],
+  "settings": {
+    "index": {
+      "analysis": {
+        "analyzer": {
+          "analyzer_keyword": {
+            "filter": "lowercase",
+            "tokenizer": "keyword"
+          }
+        }
+      }
+    }
+  },
+  "mappings": {
+    "message": {
+      "dynamic_templates": [
+        {
+          "internal_fields": {
+            "mapping": {
+              "type": "keyword"
+            },
+            "match_mapping_type": "string",
+            "match": "gl2_*"
+          }
+        },
+        {
+          "store_generic": {
+            "mapping": {
+              "type": "keyword"
+            },
+            "match_mapping_type": "string"
+          }
+        }
+      ],
+      "properties": {
+        "reason": {
+          "type": "keyword"
+        },
+        "gl2_remote_ip": {
+          "type": "keyword"
+        },
+        "gl2_remote_port": {
+          "type": "long"
+        },
+        "icmp_unreachport_protocol": {
+          "type": "keyword"
+        },
+        "PF_UDP_DATA": {
+          "type": "keyword"
+        },
+        "rule_number": {
+          "type": "keyword"
+        },
+        "dest_ip_geolocation": {
+          "copy_to": [
+            "dst_location"
+          ],
+          "type": "text"
+        },
+        "source": {
+          "fielddata": true,
+          "analyzer": "analyzer_keyword",
+          "type": "text"
+        },
+        "gl2_source_input": {
+          "type": "keyword"
+        },
+        "ack_number": {
+          "type": "keyword"
+        },
+        "ip_ver": {
+          "type": "keyword"
+        },
+        "gl2_processing_timestamp": {
+          "format": "yyyy-MM-dd HH:mm:ss.SSS",
+          "type": "date"
+        },
+        "dest_ip_city_name": {
+          "type": "keyword"
+        },
+        "IPv6_Flag1": {
+          "type": "keyword"
+        },
+        "PF_ICMP_UNREACHPORT": {
+          "type": "keyword"
+        },
+        "tcp_flags": {
+          "type": "keyword"
+        },
+        "IPv6_Flag2": {
+          "type": "keyword"
+        },
+        "PF_ICMP_TYPE": {
+          "type": "keyword"
+        },
+        "src_ip_city_name": {
+          "type": "keyword"
+        },
+        "action": {
+          "type": "keyword"
+        },
+        "gl2_source_node": {
+          "type": "keyword"
+        },
+        "id": {
+          "type": "keyword"
+        },
+        "src_ip_geolocation": {
+          "copy_to": [
+            "src_location"
+          ],
+          "type": "text"
+        },
+        "dest_port": {
+          "type": "keyword"
+        },
+        "offset": {
+          "type": "keyword"
+        },
+        "IPV6": {
+          "type": "keyword"
+        },
+        "level": {
+          "type": "long"
+        },
+        "flow_label": {
+          "type": "keyword"
+        },
+        "IPV4": {
+          "type": "keyword"
+        },
+        "streams": {
+          "type": "keyword"
+        },
+        "gl2_message_id": {
+          "type": "keyword"
+        },
+        "PF_ICMP_ECHO_REQ_REPLY": {
+          "type": "keyword"
+        },
+        "icmp_unreachport_port": {
+          "type": "keyword"
+        },
+        "icmp_echo_id": {
+          "type": "keyword"
+        },
+        "dest_ip": {
+          "type": "keyword"
+        },
+        "proto": {
+          "type": "keyword"
+        },
+        "PF_IPv6_SPECIFIC_DATA": {
+          "type": "keyword"
+        },
+        "Option": {
+          "type": "keyword"
+        },
+        "PF_ICMP_DATA": {
+          "type": "keyword"
+        },
+        "icmp_type": {
+          "type": "keyword"
+        },
+        "PF_IP_SPECIFIC_DATA": {
+          "type": "keyword"
+        },
+        "PF_IPv6_VAR": {
+          "type": "keyword"
+        },
+        "gl2_receive_timestamp": {
+          "format": "yyyy-MM-dd HH:mm:ss.SSS",
+          "type": "date"
+        },
+        "PF_ICMP_RESPONSE": {
+          "type": "keyword"
+        },
+        "PF_IP_DATA": {
+          "type": "keyword"
+        },
+        "flags": {
+          "type": "keyword"
+        },
+        "interface": {
+          "type": "keyword"
+        },
+        "src_port_name": {
+          "type": "keyword"
+        },
+        "tcp_options": {
+          "type": "keyword"
+        },
+        "src_ip": {
+          "type": "keyword"
+        },
+        "window_size": {
+          "type": "keyword"
+        },
+        "dest_port_name": {
+          "type": "keyword"
+        },
+        "PF_LOG_DATA": {
+          "type": "keyword"
+        },
+        "proto_id": {
+          "type": "keyword"
+        },
+        "tracker": {
+          "type": "keyword"
+        },
+        "tos": {
+          "type": "keyword"
+        },
+        "direction": {
+          "type": "keyword"
+        },
+        "timestamp": {
+          "format": "yyyy-MM-dd HH:mm:ss.SSS",
+          "type": "date"
+        },
+        "PF_PROTOCOL_DATA": {
+          "type": "keyword"
+        },
+        "PF_TCP_DATA": {
+          "type": "keyword"
+        },
+        "length": {
+          "type": "keyword"
+        },
+        "Flags": {
+          "type": "keyword"
+        },
+        "message": {
+          "analyzer": "standard",
+          "type": "text"
+        },
+        "PF_LOG_ENTRY": {
+          "type": "keyword"
+        },
+        "ttl": {
+          "type": "keyword"
+        },
+        "icmp_echo_sequence": {
+          "type": "keyword"
+        },
+        "sequence_number": {
+          "type": "keyword"
+        },
+        "src_location": {
+          "type": "geo_point"
+        },
+        "src_port": {
+          "type": "keyword"
+        },
+        "dest_ip_country_code": {
+          "type": "keyword"
+        },
+        "Type": {
+          "type": "keyword"
+        },
+        "dst_location": {
+          "type": "geo_point"
+        },
+        "src_ip_country_code": {
+          "type": "keyword"
+        },
+        "full_message": {
+          "analyzer": "standard",
+          "type": "text"
+        },
+        "pf": {
+          "type": "keyword"
+        },
+        "facility": {
+          "type": "keyword"
+        },
+        "PF_IPv4_SPECIFIC_DATA": {
+          "type": "keyword"
+        }
+      }
+    }
+  },
+  "aliases": {}
+}
