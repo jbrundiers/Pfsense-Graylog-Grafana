@@ -85,7 +85,8 @@ Add the following and save/exit
 ```
 Modify Grylog GeoIP configuration via WebGui:
 
-https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/GraylogGeoIPConf.JPG
+![GeoIpConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/GraylogGeoIPConf.JPG)
+
 
 
 ### 14. Download the following configuration files
