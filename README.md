@@ -83,6 +83,10 @@ Add the following and save/exit
 ```
 00 17 * * 0 geoipupdate -d /usr/share/GeoIP
 ```
+Modify Grylog GeoIP configuration via WebGui:
+
+https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/GraylogGeoIPConf.JPG
+
 
 ### 14. Download the following configuration files
 ```
