@@ -113,6 +113,20 @@ Open the git file that has the template and paste its content into cerebro and c
 ![IndexConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/CerebroIndexTemplate.JPG)
 
 
+!!! IMPORTANT: Now we will stop the graylog service to proceed to eliminate the index through Cerebro.
+```
+ systemctl stop graylog-server.service
+```
+
+In Cerebro we stand on top of the index and unfold the options and select delete index.
+![IndexDel](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/CerebroIndexDelete.JPG)
+
+We start the graylog service again and this will recreate the index with this template.
+
+```
+ systemctl start graylog-server.service
+```
+Once this procedure is done, we don't need Cerebro for daily work, so it could be disable in docker-compose.yml.
 
 ### 7. Login to pfSense and Forward syslogs
 - In pfSense navigate to Status->System Logs, then click on Settings.
