@@ -83,16 +83,21 @@ Add the following and save/exit
 ```
 00 17 * * 0 geoipupdate -d /usr/share/GeoIP
 ```
-Modify Grylog GeoIP configuration via WebGui:
+Modify Graylog GeoIP configuration via WebGui:
 
 ![GeoIpConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/GraylogGeoIPConf.JPG)
 
 
 ### 5. Download the Custom Content Pack
-This content pack includes Input rsyslog type , extractors, lookup tables, Data adapters for lockup tables and Cache for lookup tables. You could do this manually, but this is preconfigured for what we want, so you don't have to fight with lookups, data adapters etc.
+This content pack includes Input PFsenseGG-Input with 3 extractors and their lookup tables, Grok patterns PF_*, the Pipeline PFsenseGG-Pipeline and the Stream PFsenseGG-Stream.
 
 We can take it from the Git directory or sideload it from github to the Workstation you do the deployment on:
 https://raw.githubusercontent.com/jbrundiers/Pfsense-Graylog-Grafana/master/PFsenseGG-content-pack.json
+
+Modify Graylog Stream Index for PFsenseGG-Stream: 
+
+![GeoIpConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/GraylogStreamSettings.JPG)
+
 
 ### 6. Download the following configuration file
 ```
