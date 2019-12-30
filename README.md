@@ -96,16 +96,25 @@ https://raw.githubusercontent.com/jbrundiers/Pfsense-Graylog-Grafana/master/PFse
 
 Modify Graylog Stream Index for PFsenseGG-Stream: 
 
-![GeoIpConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/GraylogStreamSettings.JPG)
+![StreamConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/GraylogStreamSettings.JPG)
 
 
-### 6. Download the following configuration file
-```
-sudo wget https://raw.githubusercontent.com
-```
+### 6. Use CEREBRO to manipulate the Elastic-Index
+By default graylog for each index that is created generates its own template and applies it every time the index rotates. If we want our own templates we must create them in the same elasticsearch. 
+We have to install our own custom index tempate because we need index fields of the type geo_point. We will convert the geo type dest_ip_geolocation and src_ip_geolocation to type geo_point to be used in the World Map panels since graylog does not use this format.
+To import the template open cerebro and go to more/index template and create a new template. In the name fill in "pfsensegg-custom".
+
+Get the Index Template from the GIT repo you cloned or sideload it from:
+
+https://raw.githubusercontent.com/jbrundiers/Pfsense-Graylog-Grafana/master/PFsenseGG-custom.elasticsearch
+
+Open the git file that has the template and paste its content into cerebro and click "create".
+
+![IndexConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/CerebroIndexTemplate.JPG)
 
 
-### 22. Login to pfSense and Forward syslogs
+
+### 7. Login to pfSense and Forward syslogs
 - In pfSense navigate to Status->System Logs, then click on Settings.
 - At the bottom check "Enable Remote Logging"
 - (Optional) Select a specific interface to use for forwarding
