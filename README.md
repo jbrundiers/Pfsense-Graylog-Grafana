@@ -88,17 +88,14 @@ Modify Grylog GeoIP configuration via WebGui:
 ![GeoIpConf](https://github.com/jbrundiers/Pfsense-Graylog-Grafana/blob/master/Pictures/GraylogGeoIPConf.JPG)
 
 
+### 5. Download the Custom Content Pack
+This content pack includes Input rsyslog type , extractors, lookup tables, Data adapters for lockup tables and Cache for lookup tables. You could do this manually, but this is preconfigured for what we want, so you don't have to fight with lookups, data adapters etc.
 
-### 14. Download the following configuration files
-```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/01-inputs.conf
-```
-```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/11-firewall.conf
-```
-```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/20-geoip.conf
-```
+We can take it from the Git directory or sideload it from github to the Workstation you do the deployment on:
+https://raw.githubusercontent.com/jbrundiers/Pfsense-Graylog-Grafana/master/PFsenseGG-content-pack.json
+
+Once it's uploaded, press the Install button. If everthing went well it should look like:
+
 
 
 ### 17. Download the following configuration file

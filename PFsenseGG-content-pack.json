@@ -1,12 +1,12 @@
 {
   "v": 1,
-  "id": "10367692-9107-4ecc-add9-3046a6d3f026",
+  "id": "a1576618-6d61-4a3d-b6d2-378e795d8044",
   "rev": 1,
-  "name": "Pfsense-Firewall",
-  "summary": "Pfsense Firewall",
+  "name": "PFsenseGG",
+  "summary": "pfSense Graylog Grafana",
   "description": "",
-  "vendor": "www.soft-toolware.net",
-  "url": "",
+  "vendor": "joerg.brundiers@t-online.de",
+  "url": "https://github.com/jbrundiers/Pfsense-Graylog-Grafana",
   "parameters": [],
   "entities": [
     {
@@ -15,7 +15,7 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "5013c713-23c6-4f93-8c96-641966e3ea95",
+      "id": "cf48c353-09a0-45a8-b562-725fc239268d",
       "data": {
         "name": "PF_CARP_DATA",
         "pattern": "(%{WORD:carp_type}),(%{INT:carp_ttl}),(%{INT:carp_vhid}),(%{INT:carp_version}),(%{INT:carp_advbase}),(%{INT:carp_advskew})"
@@ -33,10 +33,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "2a944054-8efe-456f-bb72-a9c0eac2af05",
+      "id": "e670f7a3-fa1d-4639-ac5e-c659f437aab6",
       "data": {
-        "name": "PF_ICMP_TSTAMP",
-        "pattern": "%{INT:icmp_tstamp_id},%{INT:icmp_tstamp_sequence}"
+        "name": "MONTHNUM",
+        "pattern": "(?:0?[1-9]|1[0-2])"
       },
       "constraints": [
         {
@@ -51,7 +51,959 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "df1642ac-cfd2-4c71-a4d0-55386274d222",
+      "id": "966a5577-5048-4a21-a8a4-8fbf804ffd43",
+      "data": {
+        "name": "EMAILLOCALPART",
+        "pattern": "[a-zA-Z][a-zA-Z0-9_.+-=:]+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f713cc8f-0f30-42ef-9fd1-678d60cf1792",
+      "data": {
+        "name": "SYSLOGBASE",
+        "pattern": "%{SYSLOGTIMESTAMP:timestamp} (?:%{SYSLOGFACILITY} )?%{SYSLOGHOST:logsource} %{SYSLOGPROG}:"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "d8032d54-36d0-45f0-87eb-71d563e2f1e1",
+      "data": {
+        "name": "IPV4",
+        "pattern": "(?<![0-9])(?:(?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))(?![0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "c273727f-24ca-4de9-9e61-22c5082e5d61",
+      "data": {
+        "name": "PF_IGMP_DATA",
+        "pattern": "datalength=%{INT:[network][packets]}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "4d5e8d48-b64b-4e02-96f7-4b97f81eee48",
+      "data": {
+        "name": "USERNAME",
+        "pattern": "[a-zA-Z0-9._-]+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "d64bf271-9dba-4fea-9b06-e9b82b4f0639",
+      "data": {
+        "name": "HTTPDUSER",
+        "pattern": "%{EMAILADDRESS}|%{USER}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "2c4211ea-eeeb-4c07-8fea-3b4fd256c4d0",
+      "data": {
+        "name": "URIPROTO",
+        "pattern": "[A-Za-z]+(\\+[A-Za-z+]+)?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "fa0bd014-6a9b-4224-99f7-41ffb83b337d",
+      "data": {
+        "name": "PF_ICMP_RESPONSE",
+        "pattern": "%{PF_ICMP_ECHO_REQ_REPLY}|%{PF_ICMP_UNREACHPORT}|%{PF_ICMP_UNREACHPROTO}|%{PF_ICMP_UNREACHABLE}|%{PF_ICMP_NEED_FLAG}|%{PF_ICMP_TSTAMP}|%{PF_ICMP_TSTAMP_REPLY}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "fc928280-65d0-43ef-8b51-295b108d3650",
+      "data": {
+        "name": "INT",
+        "pattern": "(?:[+-]?(?:[0-9]+))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5332fb02-afa9-4c02-bf88-436d64462175",
+      "data": {
+        "name": "DATESTAMP",
+        "pattern": "%{DATE}[- ]%{TIME}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "78bde91e-4cc5-46e6-a066-525df2278f1c",
+      "data": {
+        "name": "PF_ICMP_TSTAMP_REPLY",
+        "pattern": "%{INT:icmp_tstamp_reply_id},%{INT:icmp_tstamp_reply_sequence},%{INT:icmp_tstamp_reply_otime},%{INT:icmp_tstamp_reply_rtime},%{INT:icmp_tstamp_reply_ttime}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "06a01b68-d90c-4d9d-8072-83c3ad9d258f",
+      "data": {
+        "name": "PF_IPv4_SPECIFIC_DATA",
+        "pattern": "(?<ip_ver>(4)),%{BASE16NUM:tos},%{WORD:ecn}?,%{INT:ttl},%{INT:id},%{INT:offset},(?:%{WORD:flags}|%{PF_SPEC:flags}),%{INT:proto_id},%{WORD:proto},"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "133cda07-e050-4a3c-b6c1-6eb3eb6bbdc9",
+      "data": {
+        "name": "PROG",
+        "pattern": "[\\x21-\\x5a\\x5c\\x5e-\\x7e]+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "1f5db6d7-77d1-4949-9e1f-d4c480d1c7e2",
+      "data": {
+        "name": "QUOTEDSTRING",
+        "pattern": "(?>(?<!\\\\)(?>\"(?>\\\\.|[^\\\\\"]+)+\"|\"\"|(?>'(?>\\\\.|[^\\\\']+)+')|''|(?>`(?>\\\\.|[^\\\\`]+)+`)|``))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "3f2c9d91-1ee4-4839-a347-8cb6c6a14aa5",
+      "data": {
+        "name": "QS",
+        "pattern": "%{QUOTEDSTRING}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "84e2c892-abe7-4df7-b2c7-8aeada9a77ad",
+      "data": {
+        "name": "URIPATHPARAM",
+        "pattern": "%{URIPATH}(?:%{URIPARAM})?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "016d23f5-7297-4394-8466-f1f64b9c023d",
+      "data": {
+        "name": "HTTPDERROR_DATE",
+        "pattern": "%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{YEAR}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f80c39e4-e420-4d90-868f-558873f23a0f",
+      "data": {
+        "name": "MONTHDAY",
+        "pattern": "(?:(?:0[1-9])|(?:[12][0-9])|(?:3[01])|[1-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8c5f57cf-cbff-4a17-bf7b-da8c36282ee5",
+      "data": {
+        "name": "HOSTNAME",
+        "pattern": "\\b(?:[0-9A-Za-z][0-9A-Za-z-]{0,62})(?:\\.(?:[0-9A-Za-z][0-9A-Za-z-]{0,62}))*(\\.?|\\b)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "9dba9193-d20e-43f1-b697-961a1050edc9",
+      "data": {
+        "name": "HOUR",
+        "pattern": "(?:2[0123]|[01]?[0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ea1c4ed2-27f1-4e53-a36e-942a1926694e",
+      "data": {
+        "name": "PF_ICMP_UNREACHABLE",
+        "pattern": "%{GREEDYDATA:icmp_unreachable}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ac657321-a2b5-46ec-8b44-4a56a7a9dd65",
+      "data": {
+        "name": "PF_LOG_DATA",
+        "pattern": "%{INT:rule_number},%{INT:sub_rule}?,,%{INT:tracker},%{DATA:interface},(?<reason>\\b[\\w\\-]+\\b),%{WORD:action},%{WORD:direction},"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "4b8defa8-d5d9-4e1e-b408-a7091816b344",
+      "data": {
+        "name": "URIPARAM",
+        "pattern": "\\?[A-Za-z0-9$.+!*'|(){},~@#%&/=:;_?\\-\\[\\]<>]*"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "1a3aa094-0545-48f0-9325-c690d7f73939",
+      "data": {
+        "name": "TIME",
+        "pattern": "(?!<[0-9])%{HOUR}:%{MINUTE}(?::%{SECOND})(?![0-9])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "c40f286b-abaa-4b49-b3df-1ca2312a4755",
+      "data": {
+        "name": "LOGLEVEL",
+        "pattern": "([Aa]lert|ALERT|[Tt]race|TRACE|[Dd]ebug|DEBUG|[Nn]otice|NOTICE|[Ii]nfo|INFO|[Ww]arn?(?:ing)?|WARN?(?:ING)?|[Ee]rr?(?:or)?|ERR?(?:OR)?|[Cc]rit?(?:ical)?|CRIT?(?:ICAL)?|[Ff]atal|FATAL|[Ss]evere|SEVERE|EMERG(?:ENCY)?|[Ee]merg(?:ency)?)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b7349df4-dd03-43f3-9a58-d430b1e3ceed",
+      "data": {
+        "name": "HOSTPORT",
+        "pattern": "%{IPORHOST}:%{POSINT}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "29abe61a-fc95-4a10-9a53-d05f6acd1cb9",
+      "data": {
+        "name": "MONTHNUM2",
+        "pattern": "(?:0[1-9]|1[0-2])"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5a05e744-546a-4e05-a44e-e982d4d4d58e",
+      "data": {
+        "name": "PF_APP_LOGOUT",
+        "pattern": "User (%{DATA:pf_ACTION}) for user \\'(%{DATA:pf_USER})\\' from: (%{GREEDYDATA:pf_REMOTE_IP})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ac9d7c9b-07a2-4a5f-a303-55b884ad8488",
+      "data": {
+        "name": "PF_PROTOCOL_DATA",
+        "pattern": "%{PF_TCP_DATA}|%{PF_UDP_DATA}|%{PF_ICMP_DATA}|%{PF_IGMP_DATA}|%{PF_IPv6_VAR}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a56dc74d-e0a6-4831-a028-236a68589112",
+      "data": {
+        "name": "SYSLOGFACILITY",
+        "pattern": "<%{NONNEGINT:facility}.%{NONNEGINT:priority}>"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "1b95e86f-3aa9-4ac3-a922-b913fd48c16c",
+      "data": {
+        "name": "DATE_EU",
+        "pattern": "%{MONTHDAY}[./-]%{MONTHNUM}[./-]%{YEAR}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a7fc803c-36c3-4727-95c8-d00bef7e5eb6",
+      "data": {
+        "name": "IPV6",
+        "pattern": "((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "bec26da7-e052-41a5-886c-59de37bf4d88",
+      "data": {
+        "name": "COMMONAPACHELOG",
+        "pattern": "%{IPORHOST:clientip} %{HTTPDUSER:ident} %{USER:auth} \\[%{HTTPDATE:timestamp}\\] \"(?:%{WORD:verb} %{NOTSPACE:request}(?: HTTP/%{NUMBER:httpversion})?|%{DATA:rawrequest})\" %{NUMBER:response} (?:%{NUMBER:bytes}|-)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "70c52fcc-58e0-4fbf-b8ad-b7849d2c5452",
+      "data": {
+        "name": "COMMONMAC",
+        "pattern": "(?:(?:[A-Fa-f0-9]{2}:){5}[A-Fa-f0-9]{2})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "3af3bb5f-65a7-4cb9-9d3e-c673e9271096",
+      "data": {
+        "name": "HTTPD20_ERRORLOG",
+        "pattern": "\\[%{HTTPDERROR_DATE:timestamp}\\] \\[%{LOGLEVEL:loglevel}\\] (?:\\[client %{IPORHOST:clientip}\\] ){0,1}%{GREEDYDATA:errormsg}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "496beac2-1abe-4f6c-a167-b782cd951e5e",
+      "data": {
+        "name": "COMBINEDAPACHELOG",
+        "pattern": "%{COMMONAPACHELOG} %{QS:referrer} %{QS:agent}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8721b044-2cea-4806-9c73-a6c60db232cf",
+      "data": {
+        "name": "PF_IPv6_VAR",
+        "pattern": "%{WORD:Type},%{WORD:Option},%{WORD:Flags},%{WORD:Flags}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5f32c10e-7c87-4b5c-b754-cd348ba81cff",
+      "data": {
+        "name": "DATESTAMP_EVENTLOG",
+        "pattern": "%{YEAR}%{MONTHNUM2}%{MONTHDAY}%{HOUR}%{MINUTE}%{SECOND}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "41fbc2b9-1509-4468-9952-de97a708166a",
+      "data": {
+        "name": "DATE_US",
+        "pattern": "%{MONTHNUM}[/-]%{MONTHDAY}[/-]%{YEAR}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "96a3050b-821b-4ec6-9e99-ec8d9b039cff",
+      "data": {
+        "name": "IP",
+        "pattern": "(?:%{IPV6}|%{IPV4})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8f6b5cc2-730c-4ef9-9265-a795340c497b",
+      "data": {
+        "name": "PF_APP_LOGIN",
+        "pattern": "(%{DATA:pf_ACTION}) for user \\'(%{DATA:pf_USER})\\' from: (%{GREEDYDATA:pf_REMOTE_IP})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "df44ae8e-9e29-44be-a6c8-7e66e45df7ca",
+      "data": {
+        "name": "PF_ICMP_TYPE",
+        "pattern": "(?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b69ccf1d-e28e-4e40-a2a0-b46ee239bf0b",
+      "data": {
+        "name": "CISCOMAC",
+        "pattern": "(?:(?:[A-Fa-f0-9]{4}\\.){2}[A-Fa-f0-9]{4})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "pipeline",
+        "version": "1"
+      },
+      "id": "e00bca34-7234-4418-affb-21df4be05241",
+      "data": {
+        "title": {
+          "@type": "string",
+          "@value": "PFsenseGG-Pipeline"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "PFsenseGG-Pipeline"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "pipeline \"PFsenseGG-Pipeline\"\nstage 0 match either\nrule \"write_utc_timestamp\"\nend"
+        },
+        "connected_streams": [
+          {
+            "@type": "string",
+            "@value": "a2d183ba-8bc0-4827-ae84-9c691b4e3211"
+          }
+        ]
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "dd4e8671-064e-4c60-932a-6feee70941ff",
+      "data": {
+        "name": "PF_LOG_ENTRY",
+        "pattern": "%{PF_LOG_DATA}%{PF_IP_SPECIFIC_DATA}%{PF_IP_DATA}%{PF_PROTOCOL_DATA}?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5739f9d6-3565-45a5-9625-674bcd6741d7",
+      "data": {
+        "name": "DATA",
+        "pattern": ".*?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a9ba5313-dcfb-423b-bcc2-0786f30894f3",
+      "data": {
+        "name": "SYSLOGHOST",
+        "pattern": "%{IPORHOST}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "14b79f61-c386-43e0-b4e7-8b5b8b194bae",
+      "data": {
+        "name": "ISO8601_TIMEZONE",
+        "pattern": "(?:Z|[+-]%{HOUR}(?::?%{MINUTE}))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "e1b95240-b846-4761-96b9-14de76473ff0",
+      "data": {
+        "name": "BASE10NUM",
+        "pattern": "(?<![0-9.+-])(?>[+-]?(?:(?:[0-9]+(?:\\.[0-9]+)?)|(?:\\.[0-9]+)))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b5b78f86-0191-4f49-b0cb-bb1f4547e2da",
+      "data": {
+        "name": "HTTPD24_ERRORLOG",
+        "pattern": "\\[%{HTTPDERROR_DATE:timestamp}\\] \\[%{WORD:module}:%{LOGLEVEL:loglevel}\\] \\[pid %{POSINT:pid}:tid %{NUMBER:tid}\\]( \\(%{POSINT:proxy_errorcode}\\)%{DATA:proxy_errormessage}:)?( \\[client %{IPORHOST:client}:%{POSINT:clientport}\\])? %{DATA:errorcode}: %{GREEDYDATA:message}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "6053f42e-3fc4-4b95-8934-42defa999299",
+      "data": {
+        "name": "DATESTAMP_RFC2822",
+        "pattern": "%{DAY}, %{MONTHDAY} %{MONTH} %{YEAR} %{TIME} %{ISO8601_TIMEZONE}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "a0f797b1-0cdd-416b-ba66-cfa5e4e2e259",
+      "data": {
+        "name": "DATE",
+        "pattern": "%{DATE_US}|%{DATE_EU}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "16f243f2-4fe6-4e56-ba39-9d477dfc8f98",
       "data": {
         "name": "PF_APP_ERROR",
         "pattern": "webConfigurator (%{DATA:pf_ACTION}) for \\'(%{DATA:pf_USER})\\' from (%{GREEDYDATA:pf_REMOTE_IP})"
@@ -69,7 +1021,43 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "91dafa9f-56a9-48de-9d81-714a7e1cfa9e",
+      "id": "a4890174-7e9d-4f04-a90d-c8d0416a43a8",
+      "data": {
+        "name": "WORD",
+        "pattern": "\\b\\w+\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "aff6942f-d447-4f21-ab2b-0c2f664d9707",
+      "data": {
+        "name": "UNIXPATH",
+        "pattern": "(/([\\w_%!$@:.,~-]+|\\\\.)*)+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b03bb495-08e4-4180-812c-79cb507b88d3",
       "data": {
         "name": "PF_IPv6_SPECIFIC_DATA",
         "pattern": "(?<ip_ver>(6)),%{BASE16NUM:IPv6_Flag1},%{WORD:IPv6_Flag2},%{WORD:flow_label},%{WORD:proto},%{INT:proto_id},"
@@ -87,10 +1075,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "8063b3d2-c5b2-4556-afe6-983a618b2197",
+      "id": "88562da4-74a0-42d9-a08e-131e323c6347",
       "data": {
-        "name": "PF_IP_DATA",
-        "pattern": "%{INT:length},%{IP:src_ip},%{IP:dest_ip},"
+        "name": "URIHOST",
+        "pattern": "%{IPORHOST}(?::%{POSINT:port})?"
       },
       "constraints": [
         {
@@ -105,10 +1093,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "5d25de3b-abed-4492-a673-1511caec5e1f",
+      "id": "056804fd-dd62-4670-bcff-922b2b970c65",
       "data": {
-        "name": "PF_IGMP_DATA",
-        "pattern": "datalength=%{INT:[network][packets]}"
+        "name": "MINUTE",
+        "pattern": "(?:[0-5][0-9])"
       },
       "constraints": [
         {
@@ -123,7 +1111,7 @@
         "name": "stream",
         "version": "1"
       },
-      "id": "ca597410-cc1b-4299-9e5d-6d2592e484f6",
+      "id": "a2d183ba-8bc0-4827-ae84-9c691b4e3211",
       "data": {
         "alarm_callbacks": [],
         "outputs": [],
@@ -133,7 +1121,7 @@
         },
         "title": {
           "@type": "string",
-          "@value": "PF-stream"
+          "@value": "PFsenseGG-Stream"
         },
         "stream_rules": [
           {
@@ -192,7 +1180,7 @@
         },
         "description": {
           "@type": "string",
-          "@value": "pfsense logs"
+          "@value": "Pfsense logs go here"
         },
         "default_stream": {
           "@type": "boolean",
@@ -212,10 +1200,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "9511d8c1-e4a3-48d0-af3c-67a78b64c8e1",
+      "id": "517605ac-8445-47de-abdb-1ac32d4d018a",
       "data": {
-        "name": "PF_APP_LOGOUT",
-        "pattern": "User (%{DATA:pf_ACTION}) for user \\'(%{DATA:pf_USER})\\' from: (%{GREEDYDATA:pf_REMOTE_IP})"
+        "name": "BASE16NUM",
+        "pattern": "(?<![0-9A-Fa-f])(?:[+-]?(?:0x)?(?:[0-9A-Fa-f]+))"
       },
       "constraints": [
         {
@@ -230,7 +1218,25 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "d9916547-05d0-45f5-a299-9dbabfba0290",
+      "id": "b6d37258-02f8-43e1-8619-3e88ba1b3fb5",
+      "data": {
+        "name": "NOTSPACE",
+        "pattern": "\\S+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ea52a0ee-87c9-4bae-a3f3-00bca34d9499",
       "data": {
         "name": "PF_ICMP_UNREACHPROTO",
         "pattern": "%{IP:[icmp_unreach_destination][ip]},%{WORD:[icmp_unreach_network][transport]}"
@@ -248,10 +1254,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "c457c395-0ed8-4aff-8a24-19e9b93f3983",
+      "id": "969e6c71-dd63-415c-b5b6-d515d753c14b",
       "data": {
-        "name": "PF_ICMP_RESPONSE",
-        "pattern": "%{PF_ICMP_ECHO_REQ_REPLY}|%{PF_ICMP_UNREACHPORT}|%{PF_ICMP_UNREACHPROTO}|%{PF_ICMP_UNREACHABLE}|%{PF_ICMP_NEED_FLAG}|%{PF_ICMP_TSTAMP}|%{PF_ICMP_TSTAMP_REPLY}"
+        "name": "TIMESTAMP_ISO8601",
+        "pattern": "%{YEAR}-%{MONTHNUM}-%{MONTHDAY}[T ]%{HOUR}:?%{MINUTE}(?::?%{SECOND})?%{ISO8601_TIMEZONE}?"
       },
       "constraints": [
         {
@@ -266,43 +1272,7 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "4eb68c48-71f5-42f9-9075-1d72cfbf8ec3",
-      "data": {
-        "name": "PF_PROTOCOL_DATA",
-        "pattern": "%{PF_TCP_DATA}|%{PF_UDP_DATA}|%{PF_ICMP_DATA}|%{PF_IGMP_DATA}|%{PF_IPv6_VAR}"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "460670f8-d203-4314-ac91-d6730e2be6ed",
-      "data": {
-        "name": "PF_UDP_DATA",
-        "pattern": "%{INT:src_port},%{INT:dest_port},%{INT:[transport][data_length]}"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "25c812f4-c5ff-41a2-9e7c-11f8a2763b23",
+      "id": "b7a58d6d-4143-49a1-bb87-c74d906608ed",
       "data": {
         "name": "PF_IP_SPECIFIC_DATA",
         "pattern": "%{PF_IPv4_SPECIFIC_DATA}|%{PF_IPv6_SPECIFIC_DATA}"
@@ -320,10 +1290,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "2553deb9-fec0-44a6-930e-016972c5299b",
+      "id": "4fdd5a0c-efb7-4e56-8a54-f1f4ae07f614",
       "data": {
-        "name": "PF_APP",
-        "pattern": "(%{DATA:pf_APP}):"
+        "name": "HTTPD_ERRORLOG",
+        "pattern": "%{HTTPD20_ERRORLOG}|%{HTTPD24_ERRORLOG}"
       },
       "constraints": [
         {
@@ -338,79 +1308,7 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "1d8eced5-b158-43a3-a2aa-6e5cf7406c94",
-      "data": {
-        "name": "PF_ICMP_TSTAMP_REPLY",
-        "pattern": "%{INT:icmp_tstamp_reply_id},%{INT:icmp_tstamp_reply_sequence},%{INT:icmp_tstamp_reply_otime},%{INT:icmp_tstamp_reply_rtime},%{INT:icmp_tstamp_reply_ttime}"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "1ec36146-7e09-46ed-b10d-ecc778caff14",
-      "data": {
-        "name": "PF_IPv4_SPECIFIC_DATA",
-        "pattern": "(?<ip_ver>(4)),%{BASE16NUM:tos},%{WORD:ecn}?,%{INT:ttl},%{INT:id},%{INT:offset},(?:%{WORD:flags}|%{PF_SPEC:flags}),%{INT:proto_id},%{WORD:proto},"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "77dea492-cc78-4780-959d-8474a66b56b6",
-      "data": {
-        "name": "PF_IPv6_VAR",
-        "pattern": "%{WORD:Type},%{WORD:Option},%{WORD:Flags},%{WORD:Flags}"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "0f00d70b-bd78-46b5-9373-9697b5ed10c9",
-      "data": {
-        "name": "PF_ICMP_UNREACHPORT",
-        "pattern": "%{IP:[icmp_unreachport_destination][ip]},%{WORD:icmp_unreachport_protocol},%{INT:icmp_unreachport_port}"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "a019c859-b0e4-4c1c-9958-11eb8c67356f",
+      "id": "b9b7a564-3a73-4562-9bb1-6866b6ef5e61",
       "data": {
         "name": "PF_ICMP_ECHO_REQ_REPLY",
         "pattern": "%{INT:icmp_echo_id},%{INT:icmp_echo_sequence}"
@@ -428,43 +1326,7 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "7920a200-d709-4186-93d4-40a33e75d1e4",
-      "data": {
-        "name": "PF_APP_LOGIN",
-        "pattern": "(%{DATA:pf_ACTION}) for user \\'(%{DATA:pf_USER})\\' from: (%{GREEDYDATA:pf_REMOTE_IP})"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "c1eaf5ed-b914-4880-9aaf-b57408a44959",
-      "data": {
-        "name": "PF_ICMP_TYPE",
-        "pattern": "(?<icmp_type>(request|reply|unreachproto|unreachport|unreach|timeexceed|paramprob|redirect|maskreply|needfrag|tstamp|tstampreply)),"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "4484e4a7-ee38-4a0b-8182-e35fe0097ad5",
+      "id": "40a80042-1cea-4d58-938b-915c987b676b",
       "data": {
         "name": "PF_APP_DATA",
         "pattern": "(%{PF_APP_LOGOUT}|%{PF_APP_LOGIN}|%{PF_APP_ERROR}|%{PF_APP_GEN})"
@@ -479,423 +1341,13 @@
     {
       "v": "1",
       "type": {
-        "name": "dashboard",
+        "name": "grok_pattern",
         "version": "1"
       },
-      "id": "cf0fb932-eb40-4f25-8d70-839e8614a46e",
+      "id": "b79e9a65-bc5e-4dca-ab4a-5aff362a31ad",
       "data": {
-        "title": {
-          "@type": "string",
-          "@value": "PF-dash"
-        },
-        "description": {
-          "@type": "string",
-          "@value": "PF-dash"
-        },
-        "widgets": [
-          {
-            "id": {
-              "@type": "string",
-              "@value": "e1303ed0-6742-4eb7-953f-3b797a3d9d60"
-            },
-            "description": {
-              "@type": "string",
-              "@value": "pf-dest-name"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "QUICKVALUES"
-            },
-            "cache_time": {
-              "@type": "integer",
-              "@value": 10
-            },
-            "time_range": {
-              "type": {
-                "@type": "string",
-                "@value": "relative"
-              },
-              "range": {
-                "@type": "integer",
-                "@value": 300
-              }
-            },
-            "configuration": {
-              "query": {
-                "@type": "string",
-                "@value": ""
-              },
-              "show_pie_chart": {
-                "@type": "boolean",
-                "@value": true
-              },
-              "sort_order": {
-                "@type": "string",
-                "@value": "desc"
-              },
-              "timerange": {
-                "type": {
-                  "@type": "string",
-                  "@value": "relative"
-                },
-                "range": {
-                  "@type": "integer",
-                  "@value": 300
-                }
-              },
-              "stacked_fields": {
-                "@type": "string",
-                "@value": ""
-              },
-              "data_table_limit": {
-                "@type": "integer",
-                "@value": 50
-              },
-              "field": {
-                "@type": "string",
-                "@value": "dest_ip_city_name"
-              },
-              "stream_id": {
-                "@type": "string",
-                "@value": "ca597410-cc1b-4299-9e5d-6d2592e484f6"
-              },
-              "show_data_table": {
-                "@type": "boolean",
-                "@value": true
-              },
-              "limit": {
-                "@type": "integer",
-                "@value": 5
-              }
-            },
-            "position": {
-              "width": {
-                "@type": "integer",
-                "@value": 2
-              },
-              "height": {
-                "@type": "integer",
-                "@value": 6
-              },
-              "row": {
-                "@type": "integer",
-                "@value": 1
-              },
-              "col": {
-                "@type": "integer",
-                "@value": 6
-              }
-            }
-          },
-          {
-            "id": {
-              "@type": "string",
-              "@value": "a0acb4b0-df24-4b81-8655-ab97b8b7cfe8"
-            },
-            "description": {
-              "@type": "string",
-              "@value": "pf-scr-ip"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "org.graylog.plugins.map.widget.strategy.MapWidgetStrategy"
-            },
-            "cache_time": {
-              "@type": "integer",
-              "@value": 10
-            },
-            "time_range": {
-              "type": {
-                "@type": "string",
-                "@value": "relative"
-              },
-              "range": {
-                "@type": "integer",
-                "@value": 300
-              }
-            },
-            "configuration": {
-              "timerange": {
-                "type": {
-                  "@type": "string",
-                  "@value": "relative"
-                },
-                "range": {
-                  "@type": "integer",
-                  "@value": 300
-                }
-              },
-              "field": {
-                "@type": "string",
-                "@value": "src_ip_geolocation"
-              },
-              "stream_id": {
-                "@type": "string",
-                "@value": "ca597410-cc1b-4299-9e5d-6d2592e484f6"
-              },
-              "query": {
-                "@type": "string",
-                "@value": ""
-              }
-            },
-            "position": {
-              "width": {
-                "@type": "integer",
-                "@value": 3
-              },
-              "height": {
-                "@type": "integer",
-                "@value": 3
-              },
-              "row": {
-                "@type": "integer",
-                "@value": 1
-              },
-              "col": {
-                "@type": "integer",
-                "@value": 1
-              }
-            }
-          },
-          {
-            "id": {
-              "@type": "string",
-              "@value": "2cc71e20-9f39-4fe1-8be0-e19d255b1688"
-            },
-            "description": {
-              "@type": "string",
-              "@value": "pf-src-name"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "QUICKVALUES"
-            },
-            "cache_time": {
-              "@type": "integer",
-              "@value": 10
-            },
-            "time_range": {
-              "type": {
-                "@type": "string",
-                "@value": "relative"
-              },
-              "range": {
-                "@type": "integer",
-                "@value": 300
-              }
-            },
-            "configuration": {
-              "query": {
-                "@type": "string",
-                "@value": ""
-              },
-              "show_pie_chart": {
-                "@type": "boolean",
-                "@value": true
-              },
-              "sort_order": {
-                "@type": "string",
-                "@value": "desc"
-              },
-              "timerange": {
-                "type": {
-                  "@type": "string",
-                  "@value": "relative"
-                },
-                "range": {
-                  "@type": "integer",
-                  "@value": 300
-                }
-              },
-              "stacked_fields": {
-                "@type": "string",
-                "@value": ""
-              },
-              "data_table_limit": {
-                "@type": "integer",
-                "@value": 50
-              },
-              "field": {
-                "@type": "string",
-                "@value": "src_ip_city_name"
-              },
-              "stream_id": {
-                "@type": "string",
-                "@value": "ca597410-cc1b-4299-9e5d-6d2592e484f6"
-              },
-              "show_data_table": {
-                "@type": "boolean",
-                "@value": true
-              },
-              "limit": {
-                "@type": "integer",
-                "@value": 5
-              }
-            },
-            "position": {
-              "width": {
-                "@type": "integer",
-                "@value": 2
-              },
-              "height": {
-                "@type": "integer",
-                "@value": 6
-              },
-              "row": {
-                "@type": "integer",
-                "@value": 1
-              },
-              "col": {
-                "@type": "integer",
-                "@value": 4
-              }
-            }
-          },
-          {
-            "id": {
-              "@type": "string",
-              "@value": "ccd99104-a690-40c0-9b52-d3855fe6f2d4"
-            },
-            "description": {
-              "@type": "string",
-              "@value": "pf-dest-ip"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "org.graylog.plugins.map.widget.strategy.MapWidgetStrategy"
-            },
-            "cache_time": {
-              "@type": "integer",
-              "@value": 10
-            },
-            "time_range": {
-              "type": {
-                "@type": "string",
-                "@value": "relative"
-              },
-              "range": {
-                "@type": "integer",
-                "@value": 300
-              }
-            },
-            "configuration": {
-              "timerange": {
-                "type": {
-                  "@type": "string",
-                  "@value": "relative"
-                },
-                "range": {
-                  "@type": "integer",
-                  "@value": 300
-                }
-              },
-              "field": {
-                "@type": "string",
-                "@value": "dest_ip_geolocation"
-              },
-              "stream_id": {
-                "@type": "string",
-                "@value": "ca597410-cc1b-4299-9e5d-6d2592e484f6"
-              },
-              "query": {
-                "@type": "string",
-                "@value": ""
-              }
-            },
-            "position": {
-              "width": {
-                "@type": "integer",
-                "@value": 3
-              },
-              "height": {
-                "@type": "integer",
-                "@value": 3
-              },
-              "row": {
-                "@type": "integer",
-                "@value": 4
-              },
-              "col": {
-                "@type": "integer",
-                "@value": 1
-              }
-            }
-          },
-          {
-            "id": {
-              "@type": "string",
-              "@value": "3303b565-a2a9-4219-80e7-42664256236e"
-            },
-            "description": {
-              "@type": "string",
-              "@value": "Blocks on WAN interface"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "STREAM_SEARCH_RESULT_COUNT"
-            },
-            "cache_time": {
-              "@type": "integer",
-              "@value": 10
-            },
-            "time_range": {
-              "type": {
-                "@type": "string",
-                "@value": "relative"
-              },
-              "range": {
-                "@type": "integer",
-                "@value": 300
-              }
-            },
-            "configuration": {
-              "timerange": {
-                "type": {
-                  "@type": "string",
-                  "@value": "relative"
-                },
-                "range": {
-                  "@type": "integer",
-                  "@value": 300
-                }
-              },
-              "lower_is_better": {
-                "@type": "boolean",
-                "@value": true
-              },
-              "stream_id": {
-                "@type": "string",
-                "@value": "ca597410-cc1b-4299-9e5d-6d2592e484f6"
-              },
-              "trend": {
-                "@type": "boolean",
-                "@value": true
-              },
-              "query": {
-                "@type": "string",
-                "@value": "interface:igb0 AND action:block AND direction:in"
-              }
-            },
-            "position": {
-              "width": {
-                "@type": "integer",
-                "@value": 2
-              },
-              "height": {
-                "@type": "integer",
-                "@value": 2
-              },
-              "row": {
-                "@type": "integer",
-                "@value": 1
-              },
-              "col": {
-                "@type": "integer",
-                "@value": 8
-              }
-            }
-          }
-        ]
+        "name": "POSINT",
+        "pattern": "\\b(?:[1-9][0-9]*)\\b"
       },
       "constraints": [
         {
@@ -910,7 +1362,7 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "cdd865a0-0711-474d-9f1a-5c29b1af6510",
+      "id": "f92fca9d-8e29-49f2-9b06-7dba789a3000",
       "data": {
         "name": "PF_TCP_DATA",
         "pattern": "%{INT:src_port},%{INT:dest_port},%{INT:[transport][data_length]},(?<tcp_flags>(\\w*)?),(?<sequence_number>(\\d*)?),(?<ack_number>(\\d*)?),(?<window_size>(\\d*)?),(?<tcp_urg_data>(\\w*)?),%{GREEDYDATA:tcp_options}"
@@ -928,10 +1380,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "a545580a-3899-4109-b844-67dbb14f01a8",
+      "id": "7140d5af-85ba-4da1-bcc4-e136bcc4b8a1",
       "data": {
-        "name": "PF_LOG_ENTRY",
-        "pattern": "%{PF_LOG_DATA}%{PF_IP_SPECIFIC_DATA}%{PF_IP_DATA}%{PF_PROTOCOL_DATA}?"
+        "name": "NONNEGINT",
+        "pattern": "\\b(?:[0-9]+)\\b"
       },
       "constraints": [
         {
@@ -946,7 +1398,7 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "fff591f8-58ef-47ea-b55f-03c6f1cd6abf",
+      "id": "99d0189e-e7f5-4167-b82a-16b0d888fe86",
       "data": {
         "name": "PF_ICMP_DATA",
         "pattern": "%{PF_ICMP_TYPE}%{PF_ICMP_RESPONSE}"
@@ -961,14 +1413,536 @@
     {
       "v": "1",
       "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f31391f9-abae-4e03-920e-2c4dd0cc0a18",
+      "data": {
+        "name": "MONTH",
+        "pattern": "\\b(?:Jan(?:uary|uar)?|Feb(?:ruary|ruar)?|M(?:a|ä)?r(?:ch|z)?|Apr(?:il)?|Ma(?:y|i)?|Jun(?:e|i)?|Jul(?:y)?|Aug(?:ust)?|Sep(?:tember)?|O(?:c|k)?t(?:ober)?|Nov(?:ember)?|De(?:c|z)(?:ember)?)\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "1d1b1d38-7e76-4202-808b-1aef638b20a9",
+      "data": {
+        "name": "PF_SPEC",
+        "pattern": "\\+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5e9d4455-b142-4722-aff9-6acb3c302e8d",
+      "data": {
+        "name": "TZ",
+        "pattern": "(?:[PMCE][SD]T|UTC)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8f48dd9e-4ce2-4cba-9b11-d19f5b961f19",
+      "data": {
+        "name": "DATESTAMP_RFC822",
+        "pattern": "%{DAY} %{MONTH} %{MONTHDAY} %{YEAR} %{TIME} %{TZ}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "14e196b7-da6a-4776-9353-056a6496bd46",
+      "data": {
+        "name": "HTTPDATE",
+        "pattern": "%{MONTHDAY}/%{MONTH}/%{YEAR}:%{TIME} %{INT}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ab0e6185-3749-4ccb-8953-70d04eaa2366",
+      "data": {
+        "name": "SPACE",
+        "pattern": "\\s*"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "dacd2f19-85de-4e34-b912-e6646971ed52",
+      "data": {
+        "name": "PF_ICMP_TSTAMP",
+        "pattern": "%{INT:icmp_tstamp_id},%{INT:icmp_tstamp_sequence}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "eb7e243f-15ff-4564-bc2a-e67e745189d6",
+      "data": {
+        "name": "WINDOWSMAC",
+        "pattern": "(?:(?:[A-Fa-f0-9]{2}-){5}[A-Fa-f0-9]{2})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "632aa0fc-4306-465b-b478-ff956a83e7c4",
+      "data": {
+        "name": "IPORHOST",
+        "pattern": "(?:%{IP}|%{HOSTNAME})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ff1a0a65-2e16-4738-8a43-415389d43ad3",
+      "data": {
+        "name": "NUMBER",
+        "pattern": "(?:%{BASE10NUM})"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8ff531e5-3055-4257-8e39-02133925a60d",
+      "data": {
+        "name": "SYSLOGPROG",
+        "pattern": "%{PROG:program}(?:\\[%{POSINT:pid}\\])?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "0b33e88b-ca70-41e9-84b3-b14bddf4f4a2",
+      "data": {
+        "name": "PF_IP_DATA",
+        "pattern": "%{INT:length},%{IP:src_ip},%{IP:dest_ip},"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "b3c754a1-475e-4c42-9856-a715684914e2",
+      "data": {
+        "name": "DAY",
+        "pattern": "(?:Mon(?:day)?|Tue(?:sday)?|Wed(?:nesday)?|Thu(?:rsday)?|Fri(?:day)?|Sat(?:urday)?|Sun(?:day)?)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "718171fc-ef54-4a08-86e6-5e24205fb138",
+      "data": {
+        "name": "WINPATH",
+        "pattern": "(?>[A-Za-z]+:|\\\\)(?:\\\\[^\\\\?*]*)+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "880f4220-5947-4d5a-b7b9-4ac648978076",
+      "data": {
+        "name": "YEAR",
+        "pattern": "(?>\\d\\d){1,2}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "6657e746-27e1-4f49-9c5e-226c4ae46944",
+      "data": {
+        "name": "PF_UDP_DATA",
+        "pattern": "%{INT:src_port},%{INT:dest_port},%{INT:[transport][data_length]}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "7ff968f9-39b6-4de1-84fb-e5f1749fdc21",
+      "data": {
+        "name": "GREEDYDATA",
+        "pattern": ".*"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8a344f80-30a8-4e48-9e83-c57dff4c41f4",
+      "data": {
+        "name": "BASE16FLOAT",
+        "pattern": "\\b(?<![0-9A-Fa-f.])(?:[+-]?(?:0x)?(?:(?:[0-9A-Fa-f]+(?:\\.[0-9A-Fa-f]*)?)|(?:\\.[0-9A-Fa-f]+)))\\b"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "ca435f18-7aa5-4cd7-bc28-172087e8a747",
+      "data": {
+        "name": "PF_APP",
+        "pattern": "(%{DATA:pf_APP}):"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "f7599d8e-9634-41b3-beb7-cc1dc49e75c8",
+      "data": {
+        "name": "UFW_MESSAGE",
+        "pattern": "\\[%{DATA}\\] \\[UFW %{WORD:ufw_action}\\] IN=%{DATA:ufw_interface} OUT= (MAC|PHYSIN)=%{DATA:ufw_mac} SRC=%{IP:ufw_src_ip} DST=%{IP:ufw_dest_ip} %{GREEDYDATA:ufw_tcp_opts} PROTO=%{WORD:ufw_protocol} SPT=%{INT:ufw_src_port} DPT=%{INT:ufw_dst_port} %{GREEDYDATA:ufw_tcp_opts}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "821ce142-3aa3-411b-9d5f-d021adc38d9f",
+      "data": {
+        "name": "PF_ICMP_UNREACHPORT",
+        "pattern": "%{IP:[icmp_unreachport_destination][ip]},%{WORD:icmp_unreachport_protocol},%{INT:icmp_unreachport_port}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5e298d26-e2ac-42d8-b8c8-91d951f9057b",
+      "data": {
+        "name": "URI",
+        "pattern": "%{URIPROTO}://(?:%{USER}(?::[^@]*)?@)?(?:%{URIHOST})?(?:%{URIPATHPARAM})?"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "72f217f4-6af2-4d37-aa2b-fa09240e6996",
+      "data": {
+        "name": "DATESTAMP_OTHER",
+        "pattern": "%{DAY} %{MONTH} %{MONTHDAY} %{TIME} %{TZ} %{YEAR}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "0ea568b9-7224-434e-8034-64c03d8b64e7",
+      "data": {
+        "name": "SYSLOGTIMESTAMP",
+        "pattern": "%{MONTH} +%{MONTHDAY} %{TIME}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "5eb00344-aaf0-4969-89af-5f6068f9fb43",
+      "data": {
+        "name": "SECOND",
+        "pattern": "(?:(?:[0-5]?[0-9]|60)(?:[:.,][0-9]+)?)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "69056ab4-3eb8-496c-8033-e537ad99a337",
+      "data": {
+        "name": "ISO8601_SECOND",
+        "pattern": "(?:%{SECOND}|60)"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "9ea39d54-8f6c-4d6f-90bd-b9516e174899",
+      "data": {
+        "name": "TTY",
+        "pattern": "(?:/dev/(pts|tty([pq])?)(\\w+)?/?(?:[0-9]+))"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "21213750-e510-4593-b90a-2881a57cd796",
+      "data": {
+        "name": "URIPATH",
+        "pattern": "(?:/[A-Za-z0-9$.+!*'(){},~:;=@#%_\\-]*)+"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "8c1f3d1b-e684-4a63-9a30-9d7ae2e50398",
+      "data": {
+        "name": "USER",
+        "pattern": "%{USERNAME}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
         "name": "input",
         "version": "1"
       },
-      "id": "b6b3c7e7-6554-435e-b889-cd209d73b996",
+      "id": "877db732-a50d-4de1-907d-28913b148826",
       "data": {
         "title": {
           "@type": "string",
-          "@value": "PF-input"
+          "@value": "PFsenseGG-input"
         },
         "configuration": {
           "expand_structured_data": {
@@ -1008,6 +1982,10 @@
           "pf": {
             "@type": "string",
             "@value": "true"
+          },
+          "input_type": {
+            "@type": "string",
+            "@value": "Pfsense"
           }
         },
         "type": {
@@ -1019,47 +1997,6 @@
           "@value": true
         },
         "extractors": [
-          {
-            "target_field": {
-              "@type": "string",
-              "@value": ""
-            },
-            "condition_value": {
-              "@type": "string",
-              "@value": "filterlog:"
-            },
-            "order": {
-              "@type": "integer",
-              "@value": 0
-            },
-            "converters": [],
-            "configuration": {
-              "grok_pattern": {
-                "@type": "string",
-                "@value": "%{PF_LOG_ENTRY}"
-              }
-            },
-            "source_field": {
-              "@type": "string",
-              "@value": "message"
-            },
-            "title": {
-              "@type": "string",
-              "@value": "PFExtractor"
-            },
-            "type": {
-              "@type": "string",
-              "@value": "GROK"
-            },
-            "cursor_strategy": {
-              "@type": "string",
-              "@value": "COPY"
-            },
-            "condition_type": {
-              "@type": "string",
-              "@value": "STRING"
-            }
-          },
           {
             "target_field": {
               "@type": "string",
@@ -1141,6 +2078,47 @@
               "@type": "string",
               "@value": "NONE"
             }
+          },
+          {
+            "target_field": {
+              "@type": "string",
+              "@value": ""
+            },
+            "condition_value": {
+              "@type": "string",
+              "@value": "filterlog:"
+            },
+            "order": {
+              "@type": "integer",
+              "@value": 0
+            },
+            "converters": [],
+            "configuration": {
+              "grok_pattern": {
+                "@type": "string",
+                "@value": "%{PF_LOG_ENTRY}"
+              }
+            },
+            "source_field": {
+              "@type": "string",
+              "@value": "message"
+            },
+            "title": {
+              "@type": "string",
+              "@value": "PF-Extractor"
+            },
+            "type": {
+              "@type": "string",
+              "@value": "GROK"
+            },
+            "cursor_strategy": {
+              "@type": "string",
+              "@value": "COPY"
+            },
+            "condition_type": {
+              "@type": "string",
+              "@value": "STRING"
+            }
           }
         ]
       },
@@ -1157,10 +2135,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "d6ea5af9-17c7-40c0-a727-bcb0644f167c",
+      "id": "5406f56c-54dd-4c72-9345-e539be07d602",
       "data": {
-        "name": "PF_SPEC",
-        "pattern": "\\+"
+        "name": "MAC",
+        "pattern": "(?:%{CISCOMAC}|%{WINDOWSMAC}|%{COMMONMAC})"
       },
       "constraints": [
         {
@@ -1175,7 +2153,7 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "1f566d26-e33a-4b0b-8f25-1e16b9014f08",
+      "id": "05fdbb59-bbee-43eb-a0be-96a0fbdcb769",
       "data": {
         "name": "PF_ICMP_NEED_FLAG",
         "pattern": "%{IP:icmp_need_flag_ip},%{INT:icmp_need_flag_mtu}"
@@ -1193,7 +2171,25 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "0f3871f0-6427-4487-a420-49c13b19327e",
+      "id": "3d89fcb6-4cec-4726-93e5-8fe0de7cc9b6",
+      "data": {
+        "name": "EMAILADDRESS",
+        "pattern": "%{EMAILLOCALPART}@%{HOSTNAME}"
+      },
+      "constraints": [
+        {
+          "type": "server-version",
+          "version": ">=3.1.3+cda805f"
+        }
+      ]
+    },
+    {
+      "v": "1",
+      "type": {
+        "name": "grok_pattern",
+        "version": "1"
+      },
+      "id": "cf34b919-40c1-4b81-bc20-556cc6147deb",
       "data": {
         "name": "PF_APP_GEN",
         "pattern": "(%{GREEDYDATA:pf_ACTION})"
@@ -1211,10 +2207,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "06a9d8a9-8b75-468c-b440-91da5b4a35e8",
+      "id": "62ea4201-2c80-41b4-a9e6-3ad711e14258",
       "data": {
-        "name": "PF_ICMP_UNREACHABLE",
-        "pattern": "%{GREEDYDATA:icmp_unreachable}"
+        "name": "PATH",
+        "pattern": "(?:%{UNIXPATH}|%{WINPATH})"
       },
       "constraints": [
         {
@@ -1229,10 +2225,10 @@
         "name": "grok_pattern",
         "version": "1"
       },
-      "id": "83c1c026-d834-43e9-be37-cde9a09b555f",
+      "id": "ac5e95c8-e283-423d-8d63-fca9a10496ea",
       "data": {
-        "name": "PF_LOG_DATA",
-        "pattern": "%{INT:rule_number},%{INT:sub_rule}?,,%{INT:tracker},%{DATA:interface},(?<reason>\\b[\\w\\-]+\\b),%{WORD:action},%{WORD:direction},"
+        "name": "UUID",
+        "pattern": "[A-Fa-f0-9]{8}-(?:[A-Fa-f0-9]{4}-){3}[A-Fa-f0-9]{12}"
       },
       "constraints": [
         {
@@ -1244,103 +2240,23 @@
     {
       "v": "1",
       "type": {
-        "name": "grok_pattern",
+        "name": "pipeline_rule",
         "version": "1"
       },
-      "id": "9e4c58f7-f1c5-4e5b-bfc8-2d60503c2943",
+      "id": "fa8272bd-7899-4602-aa82-0b5dd62547e8",
       "data": {
-        "name": "WORD",
-        "pattern": "\\b\\w+\\b"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
+        "title": {
+          "@type": "string",
+          "@value": "write_utc_timestamp"
+        },
+        "description": {
+          "@type": "string",
+          "@value": "write_utc_timestamp just in case your syslog provides non-utc unmarked timestamped"
+        },
+        "source": {
+          "@type": "string",
+          "@value": "rule \"write_utc_timestamp\"\nwhen \n  has_field(\"timestamp\")\nthen\n  let source_timestamp = parse_date(substring(to_string(now(\"Etc/UTC\")),0,23), \"yyyy-MM-dd'T'HH:mm:ss.SSS\");\n  let dest_timestamp = format_date(source_timestamp,\"yyyy-MM-dd HH:mm:ss\");\n  set_field(\"utc_timestamp\", dest_timestamp);\nend"
         }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "49966008-186d-4726-b22d-ba14d7b54d26",
-      "data": {
-        "name": "INT",
-        "pattern": "(?:[+-]?(?:[0-9]+))"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "702a3d37-7418-417e-91e7-d12d990a93cc",
-      "data": {
-        "name": "GREEDYDATA",
-        "pattern": ".*"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "a3acac22-c03f-42f6-b8c9-80193c399649",
-      "data": {
-        "name": "DATA",
-        "pattern": ".*?"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "e682f47e-3eac-45bd-9374-ff028e7af90e",
-      "data": {
-        "name": "BASE16NUM",
-        "pattern": "(?<![0-9A-Fa-f])(?:[+-]?(?:0x)?(?:[0-9A-Fa-f]+))"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "c6097578-b029-4d3d-8394-b95add051f41",
-      "data": {
-        "name": "IP",
-        "pattern": "(?:%{IPV6}|%{IPV4})"
       },
       "constraints": [
         {
@@ -1355,7 +2271,7 @@
         "name": "lookup_table",
         "version": "1"
       },
-      "id": "9721a79e-c3bf-401f-a728-d5aca853e5d1",
+      "id": "d1e52468-3b24-484c-9486-d2d126638419",
       "data": {
         "default_single_value_type": {
           "@type": "string",
@@ -1363,7 +2279,7 @@
         },
         "cache_name": {
           "@type": "string",
-          "@value": "46193fcb-992f-4d5e-a3a4-931f036d4778"
+          "@value": "111ba7b3-eafa-43ce-9e84-bbcc2537ed95"
         },
         "name": {
           "@type": "string",
@@ -1379,7 +2295,7 @@
         },
         "data_adapter_name": {
           "@type": "string",
-          "@value": "0ba7051d-9080-4932-b766-d99932364d36"
+          "@value": "4c89957a-c97f-48a5-84ab-8b4d78f033c6"
         },
         "title": {
           "@type": "string",
@@ -1404,46 +2320,10 @@
     {
       "v": "1",
       "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "1eb1dafc-226f-467c-8ff7-e60fbac4c39c",
-      "data": {
-        "name": "IPV6",
-        "pattern": "((([0-9A-Fa-f]{1,4}:){7}([0-9A-Fa-f]{1,4}|:))|(([0-9A-Fa-f]{1,4}:){6}(:[0-9A-Fa-f]{1,4}|((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){5}(((:[0-9A-Fa-f]{1,4}){1,2})|:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3})|:))|(([0-9A-Fa-f]{1,4}:){4}(((:[0-9A-Fa-f]{1,4}){1,3})|((:[0-9A-Fa-f]{1,4})?:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){3}(((:[0-9A-Fa-f]{1,4}){1,4})|((:[0-9A-Fa-f]{1,4}){0,2}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){2}(((:[0-9A-Fa-f]{1,4}){1,5})|((:[0-9A-Fa-f]{1,4}){0,3}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(([0-9A-Fa-f]{1,4}:){1}(((:[0-9A-Fa-f]{1,4}){1,6})|((:[0-9A-Fa-f]{1,4}){0,4}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:))|(:(((:[0-9A-Fa-f]{1,4}){1,7})|((:[0-9A-Fa-f]{1,4}){0,5}:((25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)(\\.(25[0-5]|2[0-4]\\d|1\\d\\d|[1-9]?\\d)){3}))|:)))(%.+)?"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
-        "name": "grok_pattern",
-        "version": "1"
-      },
-      "id": "bf26cebf-032a-4d87-9020-f535e3ca2851",
-      "data": {
-        "name": "IPV4",
-        "pattern": "(?<![0-9])(?:(?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5])[.](?:[0-1]?[0-9]{1,2}|2[0-4][0-9]|25[0-5]))(?![0-9])"
-      },
-      "constraints": [
-        {
-          "type": "server-version",
-          "version": ">=3.1.3+cda805f"
-        }
-      ]
-    },
-    {
-      "v": "1",
-      "type": {
         "name": "lookup_adapter",
         "version": "1"
       },
-      "id": "0ba7051d-9080-4932-b766-d99932364d36",
+      "id": "4c89957a-c97f-48a5-84ab-8b4d78f033c6",
       "data": {
         "name": {
           "@type": "string",
@@ -1505,7 +2385,7 @@
         "name": "lookup_cache",
         "version": "1"
       },
-      "id": "46193fcb-992f-4d5e-a3a4-931f036d4778",
+      "id": "111ba7b3-eafa-43ce-9e84-bbcc2537ed95",
       "data": {
         "name": {
           "@type": "string",
