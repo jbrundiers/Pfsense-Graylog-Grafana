@@ -94,13 +94,9 @@ This content pack includes Input rsyslog type , extractors, lookup tables, Data 
 We can take it from the Git directory or sideload it from github to the Workstation you do the deployment on:
 https://raw.githubusercontent.com/jbrundiers/Pfsense-Graylog-Grafana/master/PFsenseGG-content-pack.json
 
-Once it's uploaded, press the Install button. If everthing went well it should look like:
-
-
-
-### 17. Download the following configuration file
+### 6. Download the following configuration file
 ```
-sudo wget https://raw.githubusercontent.com/a3ilson/pfelk/master/conf.d/patterns/pf-12.2019.grok
+sudo wget https://raw.githubusercontent.com
 ```
 
 
